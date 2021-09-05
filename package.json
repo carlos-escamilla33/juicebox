@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "seed:dev": "nodemon ./db/seed.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/carlos-escamilla33/juicebox/issues"
+  },
+  "dependencies": {
+    "pg": "^8.7.1"
   }
 }
