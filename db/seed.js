@@ -5,7 +5,7 @@ const {
 } = require('./index');
 
 // new function, should attempt to create a few users
-async function createInitialUsers() {
+const createInitialUsers = async() => {
     try {
         console.log("Starting to create users...");
 
@@ -23,7 +23,7 @@ async function createInitialUsers() {
 // then modify rebuildDB to call our new function
 
 
-async function dropTables() {
+const dropTables = async () => {
     try {
         console.log("Starting to drop tables...");
 
@@ -38,7 +38,7 @@ async function dropTables() {
     }
 }
 
-async function createTables() {
+const createTables = async () => {
     try {
         console.log("Starting to build tables...");
 
@@ -57,7 +57,7 @@ async function createTables() {
     }
 }
 
-async function testDB() {
+const testDB = async () => {
     try {
         console.log("Starting to test database....");
 
@@ -71,7 +71,7 @@ async function testDB() {
     }
 }
 
-async function rebuildDB() {
+const rebuildDB = async () => {
     try {
         client.connect();
 

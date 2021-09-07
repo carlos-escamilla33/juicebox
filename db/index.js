@@ -9,7 +9,7 @@ const getAllUsers = async () => {
   return rows
 }
 
-async function createUser({ username, password }) {
+const createUser = async ({ username, password }) => {
   try {
     const { rows } = await client.query(`
       INSERT INTO users(username, password) 
