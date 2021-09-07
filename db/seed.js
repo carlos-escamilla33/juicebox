@@ -59,7 +59,7 @@ async function createTables() {
 
 async function testDB() {
     try {
-        console.log("Starting to test database...");
+        console.log("Starting to test database....");
 
         const users = await getAllUsers();
         console.log("getAllUsers:", users);
