@@ -2,7 +2,12 @@ const {
     client,
     getAllUsers,
     createUser,
-    updateUser
+    updateUser,
+    createPost,
+    updatePost,
+    getAllPosts,
+    getPostsByUser,
+    getUserById
 } = require('./index');
 
 const createInitialUsers = async () => {
@@ -86,6 +91,33 @@ const createTables = async () => {
     }
 }
 
+const createInitialPosts = async () => {
+    try {
+        const [albert, sandra, glamgal] = await getAllUsers();
+
+        await createPost({
+            authorId: albert.id,
+            title: "First Post",
+            content: "This is my first post."
+        })
+
+        await createPost({
+            authorId: sandra.id,
+            title: "I love pugs",
+            content: "Pugs are really chubby."
+        })
+
+        await createPost({
+            authorId: glamgal.id,
+            title: "I love weiner dogs",
+            content: "A lot of them have a lot of attitude."
+        })
+    }
+    catch (error) {
+        throw error
+    }
+}
+
 const testDB = async () => {
     try {
         console.log("Starting to test database....");
@@ -101,7 +133,22 @@ const testDB = async () => {
         });
         console.log("Result:", updateUserResult);
 
-        console.log("Finished database tests!");
+       console.log("Calling getAllPosts");
+       const posts = await getAllPosts();
+       console.log("Result:", posts);
+
+       console.log("Calling updatePosts on posts[0]");
+       const updatePostResults = await updatePost(posts[0].id, {
+           title: "New Title",
+           content: "Updated Content"
+       });
+       console.log("Result:", updatePostResults);
+
+       console.log("Calling getUserById with 1");
+       const albert = await getUserById(1);
+       console.log("Result:",  albert);
+
+       console.log("Finished database tests!");
 
     } catch (error) {
         console.error("Error testing database!");
@@ -116,6 +163,7 @@ const rebuildDB = async () => {
         await dropTables();
         await createTables();
         await createInitialUsers();
+        await createInitialPosts();
     } catch (error) {
         throw error;
     }
