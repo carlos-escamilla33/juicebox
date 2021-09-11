@@ -1,13 +1,13 @@
 const {
     client,
-    getAllUsers,
     createUser,
     updateUser,
+    getAllUsers,
+    getUserById,
     createPost,
     updatePost,
     getAllPosts,
-    getPostsByUser,
-    getUserById
+    getPostsByUser
 } = require('./index');
 
 const createInitialUsers = async () => {
@@ -50,6 +50,8 @@ const dropTables = async () => {
         console.log("Starting to drop tables...");
 
         await client.query(`
+        DROP TABLE IF EXISTS post_tags;
+        DROP TABLE IF EXISTS tags;
         DROP TABLE IF EXISTS posts;
         DROP TABLE IF EXISTS users;
       `);
@@ -82,6 +84,18 @@ const createTables = async () => {
             content TEXT NOT NULL,
             active BOOLEAN DEFAULT true
         );
+
+        CREATE TABLE tags (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) UNIQUE NOT NULL
+        );
+
+        CREATE TABLE post_tags (
+            "postId" INTEGER REFERENCES posts(id),
+            "tagId" INTEGER REFERENCES tags(id),
+            UNIQUE("postId", "tagId")
+        );
+
       `);
 
         console.log("Finished building tables!");
@@ -133,22 +147,22 @@ const testDB = async () => {
         });
         console.log("Result:", updateUserResult);
 
-       console.log("Calling getAllPosts");
-       const posts = await getAllPosts();
-       console.log("Result:", posts);
+        console.log("Calling getAllPosts");
+        const posts = await getAllPosts();
+        console.log("Result:", posts);
 
-       console.log("Calling updatePosts on posts[0]");
-       const updatePostResults = await updatePost(posts[0].id, {
-           title: "New Title",
-           content: "Updated Content"
-       });
-       console.log("Result:", updatePostResults);
+        console.log("Calling updatePosts on posts[0]");
+        const updatePostResults = await updatePost(posts[0].id, {
+            title: "New Title",
+            content: "Updated Content"
+        });
+        console.log("Result:", updatePostResults);
 
-       console.log("Calling getUserById with 1");
-       const albert = await getUserById(1);
-       console.log("Result:",  albert);
+        console.log("Calling getUserById with 1");
+        const albert = await getUserById(1);
+        console.log("Result:", albert);
 
-       console.log("Finished database tests!");
+        console.log("Finished database tests!");
 
     } catch (error) {
         console.error("Error testing database!");

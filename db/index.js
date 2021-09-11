@@ -58,7 +58,7 @@ const updateUser = async (id, fields = {}) => {
 
 const getUserById = async (userId) => {
   try {
-    const {rows: [user]} = await client.query(`
+    const { rows: [user] } = await client.query(`
       SELECT id, username, name, location, active
       FROM users
       WHERE id=${userId}
@@ -151,11 +151,43 @@ const getPostsByUser = async (userId) => {
   }
 }
 
+// TAGS
+// const createTags = async (tagList) => {
+//   if (tagList.length === 0) {
+//     return;
+//   }
+
+//   const insertValues = tagList.map(
+//     (_, index) => `$${index + 1}`
+//   ).join('), (');
+
+//   const selectValues = tagList.map(
+//     (_, index) => `$${index + 1}`
+//   ).join(", ");
+
+//   try {
+//     const {rows} = await client.query(`
+//       INSERT INTO tags(${insertValues})
+//       ON CONFILCT
+//     `)
+//     // const {rows} = await client.query(`
+//     //   SELECT name.* 
+//     //   FROM tagList
+//     //   WHERE name = ${selectValues};
+//     // `)
+
+//     return rows
+//   }
+//   catch (error) {
+//     throw error
+//   }
+// }
+
 module.exports = {
   client,
-  getAllUsers,
   createUser,
   updateUser,
+  getAllUsers,
   getUserById,
   createPost,
   updatePost,
