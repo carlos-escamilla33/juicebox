@@ -9,7 +9,7 @@ const {
     getAllPosts,
     createTags,
     addTagsToPost,
-    getPostById
+    getPostsByTagName
 } = require('./index');
 
 const createInitialUsers = async () => {
@@ -114,19 +114,22 @@ const createInitialPosts = async () => {
         await createPost({
             authorId: albert.id,
             title: "First Post",
-            content: "This is my first post."
+            content: "This is my first post.",
+            tags: ["#happy", "#youcandoanything"]
         })
 
         await createPost({
             authorId: sandra.id,
             title: "I love pugs",
-            content: "Pugs are really chubby."
+            content: "Pugs are really chubby.",
+            tags: ["#happy", "#worst-day-ever"]
         })
 
         await createPost({
             authorId: glamgal.id,
             title: "I love weiner dogs",
-            content: "A lot of them have a lot of attitude."
+            content: "A lot of them have a lot of attitude.",
+            tags: ["#happy", "#youcandoanything", "#canmandoeverything"]
         })
     }
     catch (error) {
@@ -185,13 +188,20 @@ const testDB = async () => {
         });
         console.log("Result:", updatePostResults);
 
-        console.log("Calling getUserById with 1");
-        const albert = await getUserById(1);
-        console.log("Result:", albert);
+        // console.log("Calling getUserById with 1");
+        // const albert = await getUserById(1);
+        // console.log("Result:", albert);
 
-        console.log("Calling getPostById")
-        const postId = await getPostById(1)
-        console.log(postId);
+        console.log("Calling updatePost on posts[1], only updating tags");
+        const updatePostTagsResult = await updatePost(posts[1].id, {
+            tags: ["#youcandoanything", "#redfish", "#bluefish"]
+        });
+        console.log("Result:", updatePostTagsResult);
+
+        console.log("Calling getPostsByTagName with #happy");
+        const postsWithHappy = await getPostsByTagName("#happy");
+        console.log("Result:", postsWithHappy);
+    
 
         console.log("Finished database tests!");
 
@@ -209,7 +219,6 @@ const rebuildDB = async () => {
         await createTables();
         await createInitialUsers();
         await createInitialPosts();
-        await createInitialTags();
     } catch (error) {
         throw error;
     }
