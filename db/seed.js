@@ -7,7 +7,9 @@ const {
     createPost,
     updatePost,
     getAllPosts,
-    getPostsByUser
+    createTags,
+    addTagsToPost,
+    getPostById
 } = require('./index');
 
 const createInitialUsers = async () => {
@@ -132,6 +134,31 @@ const createInitialPosts = async () => {
     }
 }
 
+const createInitialTags = async () => {
+    try {
+        console.log("Starting to create tags...");
+
+        const [happy, sad, inspo, catman] = await createTags([
+            '#happy',
+            '#worst-day-ever',
+            '#youcandoanything',
+            '#catmandoeverything'
+        ]);
+
+        const [postOne, postTwo, postThree] = await getAllPosts();
+
+        await addTagsToPost(postOne.id, [happy, inspo]);
+        await addTagsToPost(postTwo.id, [sad, inspo]);
+        await addTagsToPost(postThree.id, [happy, catman, inspo]);
+
+        console.log("Finished creating tags!");
+    }
+    catch (error) {
+        console.log("Error creating tags!");
+        throw error
+    }
+}
+
 const testDB = async () => {
     try {
         console.log("Starting to test database....");
@@ -162,6 +189,10 @@ const testDB = async () => {
         const albert = await getUserById(1);
         console.log("Result:", albert);
 
+        console.log("Calling getPostById")
+        const postId = await getPostById(1)
+        console.log(postId);
+
         console.log("Finished database tests!");
 
     } catch (error) {
@@ -178,6 +209,7 @@ const rebuildDB = async () => {
         await createTables();
         await createInitialUsers();
         await createInitialPosts();
+        await createInitialTags();
     } catch (error) {
         throw error;
     }
