@@ -82,23 +82,20 @@ const createInitialUsers = async () => {
             username: 'albert',
             password: 'bertie99',
             name: 'Al Bert',
-            location: 'Sidney, Australia',
-            active: true
+            location: 'Sidney, Australia'
         });
         await createUser({
             username: 'sandra',
             password: '2sandy4me',
             name: "Al Bert",
-            location: 'Sidney, Australia',
-            active: true
+            location: 'Sidney, Australia'
 
         });
         await createUser({
             username: 'glamgal',
             password: 'soglam',
             name: 'Joshua',
-            location: 'Upper East Side',
-            active: true
+            location: 'Upper East Side'
         });
 
         console.log("Finished creating users!");
@@ -112,6 +109,7 @@ const createInitialPosts = async () => {
     try {
         const [albert, sandra, glamgal] = await getAllUsers();
 
+        console.log("Starting to create posts...")
         await createPost({
             authorId: albert.id,
             title: "First Post",
@@ -132,6 +130,7 @@ const createInitialPosts = async () => {
             content: "A lot of them have a lot of attitude.",
             tags: ["#happy", "#youcandoanything", "#canmandoeverything"]
         })
+        console.log("Finished creating posts!");
     }
     catch (error) {
         throw error
