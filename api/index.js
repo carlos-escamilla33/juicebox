@@ -10,8 +10,8 @@ const tagsRouter = require("./tags");
 
 
 apiRouter.use(async (req, res, next) => {
-    const prefix = "Bearer "
-    const auth = req.headers["Authorization"];
+    const prefix = "Bearer ";
+    const auth = req.header("Authorization");
 
     if (!auth) {
         next();
@@ -43,6 +43,6 @@ apiRouter.use("/posts", postsRouter);
 apiRouter.use("/tags", tagsRouter);
 apiRouter.use((error, req, res, next) => {
     res.send(error);
-  });
+});
 
 module.exports = apiRouter;
