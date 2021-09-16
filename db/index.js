@@ -314,6 +314,20 @@ const getAllTags = async () => {
   }
 }
 
+const getUserByUsername = async (username) => {
+  try {
+    const {rows: [user]} = await client.query(`
+      SELECT *
+      FROM users
+      WHERE username=$1;
+    `)
+    return user;
+  }
+  catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   client,
   createUser,
@@ -328,5 +342,6 @@ module.exports = {
   createTags,
   getAllTags,
   createPostTag,
-  addTagsToPost
+  addTagsToPost,
+  getUserByUsername
 }
