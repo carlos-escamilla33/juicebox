@@ -87,7 +87,7 @@ const createInitialUsers = async () => {
         await createUser({
             username: 'sandra',
             password: '2sandy4me',
-            name: "Al Bert",
+            name: "Sandyyy",
             location: 'Sidney, Australia'
 
         });
