@@ -39,7 +39,7 @@ const updateUser = async (id, fields = {}) => {
       RETURNING *;
     `, Object.values(fields));
 
-    return user
+    return user;
   }
   catch (error) {
     throw error
@@ -74,7 +74,6 @@ const getUserById = async (userId) => {
     user.posts = await getPostsByUser(userId);
 
     return user;
-
   }
   catch (error) {
     throw error;
@@ -321,7 +320,7 @@ const getUserByUsername = async (username) => {
       FROM users
       WHERE username=$1;
     `, [username]);
-    
+
     return user;
   }
   catch (error) {
