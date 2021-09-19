@@ -5,7 +5,7 @@ const express = require("express");
 const server = express();
 const apiRouter = require("./api");
 const morgan = require("morgan");
-const {client} = require ("./db");
+const { client } = require("./db");
 client.connect();
 
 server.use(express.json());
