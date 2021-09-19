@@ -11,7 +11,17 @@ postsRouter.use((req, res, next) => {
 });
 
 postsRouter.get("/", async (req, res) => {
-    const posts = await getAllPosts();
+    const allPosts = await getAllPosts();
+
+    const posts = allPosts.filter(post => {
+        if (post.active) {
+            return true;
+        }
+        if (req.user && post.author.id === req.user.id) {
+            return true;
+        }
+        return false;
+    })
 
     res.send({
         posts
