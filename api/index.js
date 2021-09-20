@@ -43,6 +43,7 @@ apiRouter.use((req, res, next) => {
   
     next();
   });
+apiRouter.get("/", )
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/posts", postsRouter);
 apiRouter.use("/tags", tagsRouter);
