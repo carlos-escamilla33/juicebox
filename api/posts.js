@@ -21,6 +21,11 @@ postsRouter.get("/", async (req, res) => {
             }
             if (req.user && post.author.id === req.user.id) {
                 return true;
+            } else {
+                next({
+                    name: "Posts Error",
+                    message: "Could not fetch posts"
+                })
             }
             return false;
         })
@@ -29,8 +34,8 @@ postsRouter.get("/", async (req, res) => {
             posts
         })
     }
-    catch (err) {
-        next(err)
+    catch (error) {
+        next(error)
     }
 });
 
