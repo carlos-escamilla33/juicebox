@@ -9,11 +9,24 @@ tagsRouter.use((req, res, next) => {
 })
 
 tagsRouter.get("/", async (req, res) => {
-    const tags = await getAllTags();
 
-    res.send({
-        tags
-    });
+    try {
+        const tags = await getAllTags();
+
+        if (tags) {
+            res.send({
+                tags
+            });
+        } else {
+            next({
+                name: "tagError",
+                message: "Could not fetch tags"
+            })
+        }
+    }
+    catch ({ name, message }) {
+        next({ name, message })
+    }
 });
 
 tagsRouter.get("/:tagName/posts", async (req, res, next) => {
